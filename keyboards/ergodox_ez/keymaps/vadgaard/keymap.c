@@ -10,7 +10,7 @@
 #include "version.h"
 
 enum layers {
-    _WIN,
+    _BASE,
     _LOWER,
     _RAISE,
     _ADJUST,
@@ -30,10 +30,11 @@ enum custom_keycodes {
 #define TGLOWER TG(_LOWER)
 #define TGRAISE TG(_RAISE)
 #define MDIA    MO(_MDIA)
-#define VIM_F   LT(_VIM, KC_F)
+
+#define VIM_F LT(_VIM, KC_F)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-/* Win
+/* Qwerty
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * | Esc    |   1  |   2  |   3  |   4  |   5  | Left |           |Right |   6  |   7  |   8  |   9  |   0  | Bksp   |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
@@ -53,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 |      |       | End  |     | PgDn |       |      |
  *                                 `---------------------'     `---------------------'
  */
-[_WIN] = LAYOUT_ergodox_pretty(
+[_BASE] = LAYOUT_ergodox_pretty(
     KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_LEFT,        KC_RGHT,      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
     KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    TGLOWER,        TGRAISE,      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
     KC_LCTL, KC_A,    KC_S,    KC_D,    VIM_F,   KC_G,                                  KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
@@ -229,7 +230,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
     switch (keycode) {
         case WIN:
-            set_single_persistent_default_layer(_WIN);
+            set_single_persistent_default_layer(_BASE);
             return false;
         case VRSN:
             SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
@@ -254,7 +255,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     ergodox_right_led_3_off();
 
     switch (get_highest_layer(state)) {
-        case _WIN:
+        case _BASE:
 #ifdef RGBLIGHT_COLOR_LAYER_0
             rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
 #endif

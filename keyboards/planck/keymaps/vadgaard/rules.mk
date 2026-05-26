@@ -1,1 +1,3 @@
-# This keymap intentionally does not enable extra features.
+ifeq ($(strip $(AUDIO_ENABLE)), yes)
+    SRC += muse.c
+endif
